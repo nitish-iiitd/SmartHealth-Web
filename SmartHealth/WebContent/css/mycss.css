@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+.extra-pad{
+	padding:10px;
+}
+.extra-mar{
+	margin:20px;
+}
+.fix-width{
+	width:150px;
+}
