@@ -46,10 +46,7 @@
 					</div>
 					<!-- END SIDEBAR USER TITLE -->
 					<!-- SIDEBAR BUTTONS -->
-					<div class="profile-userbuttons">
-						<button type="button" class="btn btn-success btn-sm">Add
-							Friend</button>
-					</div>
+
 					<!-- END SIDEBAR BUTTONS -->
 					<!-- SIDEBAR MENU -->
 					<div class="profile-usermenu">
@@ -102,13 +99,11 @@
 						</div>
 						<div id="addqual" class="tab-pane fade">
 							<h3>Add Qualification</h3>
-							<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco
-								laboris nisi ut aliquip ex ea commodo consequat.</p>
+							<p></p>
 						</div>
 						<div id="createforum" class="tab-pane fade">
 							<h3>Create Forum</h3>
-							<p>Sed ut perspiciatis unde omnis iste natus error sit
-								voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+							<p></p>
 						</div>
 						
 					</div>

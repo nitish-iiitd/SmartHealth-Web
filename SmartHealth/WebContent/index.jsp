@@ -8,33 +8,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="mycss.css">
+<link rel="stylesheet" href="css/mycss.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+body {
+	background-image: url("images/back.jpg");
+}
+.col-sm-4
+{
+    background-color: #fff;
+    background-color: rgba(255,255,255,0.7);
+}
+
+</style>
 </head>
 <body>
 
-	<div class="jumbotron text-center">
-		<h1>SmartHealth</h1>
-		<p>Let's do something good with social networking !</p>
-	</div>
+
 
 	<div class="container">
+		<div class="jumbotron text-center">
+			<h1>SmartHealth</h1>
+			<p>Let's do something good with social networking !</p>
+		</div>
 		<div class="row text-center">
 			<div class="col-sm-4">
 				<h3>Discuss Health Issues</h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+				<p></p>
 			</div>
 			<div class="col-sm-4">
 				<h3>Advice from Doctors</h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+				<p></p>
 			</div>
 			<div class="col-sm-4">
 				<h3>Maintain Your Health</h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+				<p></p>
 			</div>
 		</div>
 		<div class="container">
@@ -42,13 +53,17 @@
 				<div class="col-sm-3"></div>
 				<div class="col-sm-3">
 					<a href="login.jsp">
-					<button type="button" class="btn btn-lg btn-primary extra-mar fix-width" onClick="location.href='/login.jsp';"/>Login</button>
+						<button type="button"
+							class="btn btn-sm btn-primary extra-mar fix-width"
+							onClick="location.href='/login.jsp';" />Login
+						</button>
 					</a>
-					
+
 				</div>
 				<div class="col-sm-3">
 					<a href="register.jsp">
-					<button type="button" class="btn btn-lg btn-success extra-mar fix-width">Register</button>
+						<button type="button"
+							class="btn btn-sm btn-success extra-mar fix-width">Register</button>
 					</a>
 				</div>
 				<div class="col-sm-3"></div>

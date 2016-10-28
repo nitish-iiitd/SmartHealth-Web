@@ -11,3 +11,10 @@
 .fix-width{
 	width:150px;
 }
+.jumbotron{
+	background-color : transparent;
+	color:inherit;
+	
+}
+
+

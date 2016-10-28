@@ -80,7 +80,7 @@
   
   <servlet>
     <servlet-name>profile</servlet-name>
-    <servlet-class>controller.ProfileServlet</servlet-class>
+    <servlet-class>controller.ShowProfileServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>profile</servlet-name>
