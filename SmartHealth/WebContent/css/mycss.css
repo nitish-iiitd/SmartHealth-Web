@@ -5,6 +5,9 @@
 .extra-mar{
 	margin:20px;
 }
+.extra-mar-sm{
+	margin:5px;
+}
 .fix-width{
 	width:150px;
 }

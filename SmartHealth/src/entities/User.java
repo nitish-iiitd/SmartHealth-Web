@@ -27,7 +27,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public abstract class User {
+public  class User {
 
 	protected String username;		   /*  Stores the handle of user. */
 	private String pass; 			   /*  Password: make sure to encrypt it in webapp */

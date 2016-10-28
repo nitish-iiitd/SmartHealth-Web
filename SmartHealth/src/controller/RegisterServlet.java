@@ -54,7 +54,7 @@ public class RegisterServlet extends HttpServlet {
 		
 		long millis = System.currentTimeMillis();
 		java.sql.Date dateCreated = new java.sql.Date(millis);
-		
+		String result="";
 		if(usertype.equals("nuser"))
 		{
 			System.out.println("nuser");
@@ -64,15 +64,23 @@ public class RegisterServlet extends HttpServlet {
 					 munic,  district,
 					 parea,  NEW_USER,true, INIT_KARMA,
 					 dateCreated);
-			String result = UserDBHandler.addNUser(nuser);
+			
+			try {
+				result = UserDBHandler.addNUser(nuser);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			String[] splitResult = result.split(":");
 			if(splitResult[0].equals("-1"))
 			{
-				
+				request.setAttribute("message", "danger_"+splitResult[1]);
+				request.getRequestDispatcher("register.jsp").forward(request, response);
 			}
 			else if(splitResult[0].equals("0"))
 			{
-				
+				request.setAttribute("message", "success_"+splitResult[1]);
+				request.getRequestDispatcher("login.jsp").forward(request, response);
 			}
 			
 		}
@@ -83,8 +91,24 @@ public class RegisterServlet extends HttpServlet {
 					 fname,  lname,  about,  photourl1,  photourl2,
 					 photourl3,  snumber,  sname,
 					 munic,  district,
-					 parea,  NEW_MOD,true,"Not Specified");
-			UserDBHandler.addModerator(moderator);
+					 parea,  NEW_MOD,true,"999999999");
+			try {
+				result = UserDBHandler.addModerator(moderator);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String[] splitResult = result.split(":");
+			if(splitResult[0].equals("-1"))
+			{
+				request.setAttribute("message", "danger_"+splitResult[1]);
+				request.getRequestDispatcher("register.jsp").forward(request, response);
+			}
+			else if(splitResult[0].equals("0"))
+			{
+				request.setAttribute("message", "success_"+splitResult[1]);
+				request.getRequestDispatcher("login.jsp").forward(request, response);
+			}
 		}
 		
 		

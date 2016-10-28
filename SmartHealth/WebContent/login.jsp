@@ -15,7 +15,25 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+	**<jsp:include page="menu.jsp" />**
 	<div class="container">
+	
+	<% 
+		// For displaying an alert at top of the page
+		if(request.getAttribute("message")!=null){
+		String completemessage = request.getAttribute("message").toString();
+		if(!completemessage.isEmpty())
+		{
+			String[] splitMessage = completemessage.split("_");
+		%>
+		<div class="alert alert-<%out.print(splitMessage[0]);%> fade in">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong><% out.print(splitMessage[0].toUpperCase() + "! : ");%></strong>
+			<% out.print(splitMessage[1]);%>
+		</div>
+		<%
+		}}
+		%>
 		<div class="row text-center">
 			<div class="col-sm-3"></div>
 			<div class="col-sm-6">
@@ -26,7 +44,7 @@
 						<label class="control-label col-sm-3" for="email">Primary
 							Email:</label>
 						<div class="col-sm-9">
-							<input type="email" class="form-control" id="email1" name="email"
+							<input type="email" class="form-control" id="email" name="email"
 								placeholder="Enter primary email">
 						</div>
 					</div>

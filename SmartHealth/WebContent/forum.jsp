@@ -16,7 +16,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+	**<jsp:include page="menu.jsp" />**
 	<div class="container">
 		<div class="row profile">
 			<div class="col-md-3">
@@ -36,16 +36,79 @@
 				</div>
 			</div>
 			<div class="col-md-9">
-				<div class="profile-content">
-					<div class="container">
-						<div class="page-header">
-							<h1>Forum Title</h1>
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="well">
+							<p>name of moderator who started it</p>
+							<img src="" class="img-circle" height="55" width="55"
+								alt="started by ki photo">
 						</div>
-						<p>Forum Summary</p>
+					</div>
+					<div class="col-sm-9">
+						<div class="well">
+							<p>Forum name 1</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="well">
+							<p>Bo</p>
+							<img src="bandmember.jpg" class="img-circle" height="55"
+								width="55" alt="Avatar">
+						</div>
+					</div>
+					<div class="col-sm-9">
+						<div class="well">
+							<p>Just Forgot that I had to mention something about someone
+								to someone about how I forgot something, but now I forgot it.
+								Ahh, forget it! Or wait. I remember.... no I don't.</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="well">
+							<p>Jane</p>
+							<img src="bandmember.jpg" class="img-circle" height="55"
+								width="55" alt="Avatar">
+						</div>
+					</div>
+					<div class="col-sm-9">
+						<div class="well">
+							<p>Just Forgot that I had to mention something about someone
+								to someone about how I forgot something, but now I forgot it.
+								Ahh, forget it! Or wait. I remember.... no I don't.</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="well">
+							<p>Anja</p>
+							<img src="bird.jpg" class="img-circle" height="55" width="55"
+								alt="Avatar">
+						</div>
+					</div>
+					<div class="col-sm-9">
+						<div class="well">
+							<p>Just Forgot that I had to mention something about someone
+								to someone about how I forgot something, but now I forgot it.
+								Ahh, forget it! Or wait. I remember.... no I don't.</p>
+						</div>
 					</div>
 				</div>
 			</div>
+			<!-- 				<div class="profile-content"> -->
+			<!-- 					<div class="container"> -->
+			<!-- 						<div class="page-header"> -->
+			<!-- 							<h1>Forum Title</h1> -->
+			<!-- 						</div> -->
+			<!-- 						<p>Forum Summary</p> -->
+			<!-- 					</div> -->
+			<!-- 				</div> -->
 		</div>
+	</div>
 	</div>
 	<br>
 	<br>

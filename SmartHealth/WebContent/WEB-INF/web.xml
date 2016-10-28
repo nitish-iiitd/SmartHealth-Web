@@ -20,4 +20,80 @@
     <servlet-name>register</servlet-name>
     <url-pattern>/register</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>health</servlet-name>
+    <servlet-class>controller.AddHealthServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>health</servlet-name>
+    <url-pattern>/health</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>logout</servlet-name>
+    <servlet-class>controller.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>logout</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>update</servlet-name>
+    <servlet-class>controller.UpdateDetailsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>update</servlet-name>
+    <url-pattern>/updatedetails</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>friends</servlet-name>
+    <servlet-class>controller.FriendshipServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>friends</servlet-name>
+    <url-pattern>/friends</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>sendRequest</servlet-name>
+    <servlet-class>controller.SendFriendRequestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>sendRequest</servlet-name>
+    <url-pattern>/sendRequest</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>acceptRequest</servlet-name>
+    <servlet-class>controller.AcceptFriendRequestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>acceptRequest</servlet-name>
+    <url-pattern>/acceptRequest</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>rejectRequest</servlet-name>
+    <servlet-class>controller.RejectFriendRequestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>rejectRequest</servlet-name>
+    <url-pattern>/rejectRequest</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>profile</servlet-name>
+    <servlet-class>controller.ProfileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>profile</servlet-name>
+    <url-pattern>/profile</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>removeFriend</servlet-name>
+    <servlet-class>controller.RemoveFriendServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>removeFriend</servlet-name>
+    <url-pattern>/removeFriend</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
