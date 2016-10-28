@@ -11,19 +11,14 @@ import java.sql.Date;
  */
 public class Datum {
 
-	public Datum(int datumID, String username, int propertyID, String value, Date whenSaved) {
-		super();
-		DatumID = datumID;
-		this.username = username;
-		PropertyID = propertyID;
-		this.value = value;
-		this.whenSaved = whenSaved;
-	}
-	private int DatumID;
-	private String username;
-	private int PropertyID;
-	private String value;
-	private Date whenSaved;
+	
+	private int DatumID; /* Unique Datum id */
+	private String username; /* datum of user */
+	private int PropertyID; /* property */
+	private String value; /* value of the property */
+	private Date whenSaved; /* date of saving datum */
+	
+	
 	public int getDatumID() {
 		return DatumID;
 	}
@@ -52,6 +47,13 @@ public class Datum {
 		this.whenSaved = whenSaved;
 	}
 	
-	
+	public Datum(int datumID, String username, int propertyID, String value, Date whenSaved) {
+		super();
+		DatumID = datumID;
+		this.username = username;
+		PropertyID = propertyID;
+		this.value = value;
+		this.whenSaved = whenSaved;
+	}
 	
 }

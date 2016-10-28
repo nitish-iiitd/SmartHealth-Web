@@ -13,7 +13,7 @@ import com.mysql.jdbc.Statement;
 public class Moderator extends User{
 
 
-	String emer_contact;
+	String emer_contact; /* emergency contact number of moderator*/
 
 
 	/**

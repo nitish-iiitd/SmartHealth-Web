@@ -2,7 +2,7 @@ package entities;
 
 public class Admin extends User{
 	
-	private String emer_contact;
+	private String emer_contact; /* emergency contact number of admin*/
 
 
 	/**

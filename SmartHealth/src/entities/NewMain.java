@@ -179,8 +179,6 @@ public class NewMain {
 		String sno = "A-333";//br.readLine();
 		System.out.println("Enter street name  : "); 
 		String snm = "address";//br.readLine();
-		System.out.println("Enter municipality: "); 
-		String mun = "about";//br.readLine();
 		System.out.print("Enter district : "); 
 		String dist = "url1";//br.readLine();
 		System.out.println("Enter postal area : "); 
@@ -243,7 +241,7 @@ public class NewMain {
 					stmt.setString(10,url3);
 					stmt.setString(11,sno);
 					stmt.setString(12,snm);
-					stmt.setString(13,mun);
+					stmt.setString(13,"");
 					stmt.setString(14,dist);
 					stmt.setString(15,parea);
 					stmt.setInt(16,NEW_MOD);
@@ -265,7 +263,7 @@ public class NewMain {
 				}
 				System.out.println("Moderator Successfully registered.");
 
-
+				
 				//  search in the qualification table if qualification is not preset then insert it into the table.
 				String  qualQuery = "select * from qualification";
 				PreparedStatement stmnt3= connection.prepareStatement(qualQuery);

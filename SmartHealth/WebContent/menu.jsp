@@ -36,6 +36,7 @@
           <% if (user != null) {%>
             
             <li><a href="logout">Logout</a></li>
+            <li><a href="quituser">Quit User</a></li>
             <%}else{ %>
             <li><a href="register.jsp">Sign up</a></li>
             <li><a href="login.jsp">Login</a></li>

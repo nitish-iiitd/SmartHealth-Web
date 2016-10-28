@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.mysql.jdbc.Statement;
+
 import java.sql.Connection;
 
 import entities.Admin;
@@ -24,14 +28,54 @@ public class UserDBHandler {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * Disables the user from the database
+	 * @param username
+	 * @return
+	 */
+	public static String quitUser(String username){
+
+		PreparedStatement ps ;
+		String result = "-1:Unknown Error";
+
+
+		String query = " Update User set  status = 0 where username = ? ";
+
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, username) ;
+
+			int res = ps.executeUpdate();
+
+			if ( res> 0 ){
+				System.out.println(" 1 row updated");
+				result = "0:Successfully Removed User";
+			}
+			else{
+				System.out.println(" No row updated");
+				result = "-1: Error in Quiting User!";
+			}
+
+
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		return "0:Successfully Removed User!";
+
+
+	}
 
 	/*
 	 * Creates end user
 	 */
 	public static String addNUser(NUser nuser) throws IOException, ClassNotFoundException {
-		
+
 		String result="-1:Unknown Error";
-		
+
 		String username = nuser.getUsername();
 		String emailp = nuser.getEmailp();
 		String pass = nuser.getPass();
@@ -91,8 +135,8 @@ public class UserDBHandler {
 							System.out.println("database remains consistent");
 						}
 					}
-					
-					
+
+
 					if (rs > 0 && rs2 > 0) {
 						System.out.println("0:New User added");
 						result = "0:Successfully registered.";
@@ -101,11 +145,11 @@ public class UserDBHandler {
 						result = "-1:New User addition failed!!";
 					}
 				} catch (Exception e) {
-					
+
 					// delete any added entries
 					//String 
 					//------------------------
-					
+
 					System.out.println("-1:Error in Adding to Database");
 					result = "-1:Error in Adding to Database";
 					e.printStackTrace();
@@ -127,9 +171,9 @@ public class UserDBHandler {
 	 * Creates new moderator by asking user details(registration)
 	 */
 	public static String addModerator(Moderator moderator) throws IOException, ClassNotFoundException {
-		
+
 		String result="-1:Unknown Error";
-		
+
 		String username = moderator.getUsername();
 		String emailp = moderator.getEmailp();
 		String pass = moderator.getPass();
@@ -189,9 +233,9 @@ public class UserDBHandler {
 							System.out.println("database remains consistent");
 						}
 					}
-					
-					
-					
+
+
+
 					if (rs > 0 && rs2 > 0) {
 						System.out.println("0:Successfully registered.");
 						result = "0:Successfully registered.";
@@ -275,7 +319,7 @@ public class UserDBHandler {
 
 		try {
 			System.out.println("loginAndGetType");
-			String query = "select * from User where email1 = ? and password = ? ";
+			String query = "select * from User where email1 = ? and password = ? and status = 1";
 			PreparedStatement stmt = connection.prepareStatement(query);
 			stmt.setString(1, email);
 			stmt.setString(2, pass);
@@ -365,64 +409,158 @@ public class UserDBHandler {
 		}
 		return null;
 	}
-	
+	/**\
+	 * Adds Qualification to the moderator
+	 * @param username
+	 * @param qualification
+	 * @return
+	 * @throws SQLException 
+	 */
+
+	public static String addQualification(String username,String qualification) throws SQLException{
+
+		String qual[]=qualification.split(",");
+		long millis=System.currentTimeMillis();  
+		java.sql.Date date=new java.sql.Date(millis); 
+		String result = "-1:Unknown Error";
+
+
+		//  search in the qualification table if qualification is not preset then insert it into the table.
+		String  qualQuery = "select * from Qualification";
+		PreparedStatement stmnt3= connection.prepareStatement(qualQuery);
+		ResultSet rs3 = stmnt3.executeQuery(qualQuery);
+
+		boolean flag=true;
+
+		for(int i=0;i<qual.length;i++){
+			qualQuery = "select * from Qualification";
+			stmnt3= connection.prepareStatement(qualQuery);
+			rs3 = stmnt3.executeQuery(qualQuery);
+
+			flag=true;
+			int id = 0;
+			String ql;
+			while(rs3.next()){
+				id= rs3.getInt(1);
+				ql = rs3.getString(2);
+				if(qual[i].equals(ql)){
+					flag=false;
+					break;
+				}
+			}
+			if(flag){
+				// finding the auto increment value
+				/*	String findAutoIncrement= "SELECT AUTO_INCREMENT FROM qualification";
+							PreparedStatement stmt6 = connection.prepareStatement(findAutoIncrement);
+							ResultSet rs6 = stmt6.executeQuery();
+							while(rs6.next()){
+								id = rs6.getInt(1);
+								System.out.println("Auto Incremented value: "+id);
+
+							}
+				 */
+
+				System.out.println("Inserting  qualification: "+qual[i]);
+				String createModeratorSql  = "insert into Qualification (description) values(?)";
+				PreparedStatement stmt5 = connection.prepareStatement(createModeratorSql, Statement.RETURN_GENERATED_KEYS);
+				stmt5.setString(1,qual[i]);
+				int rs5 = stmt5.executeUpdate();
+				// Auto Incremented Id
+				ResultSet rs = stmt5.getGeneratedKeys();
+				rs.next();
+				id = rs.getInt(1);
+				System.out.println("New ID is: "+id);
+
+				if(rs5 > 0){
+					System.out.println("New Qualification added");
+					result = "0:New Qualification added";
+
+				}
+				else{
+					System.out.println("Failed!! to add new Qualification.");
+					result="-1:Failed!! to add new Qualification.";
+				}
+
+			}
+			else{
+				System.out.println("Qualification Already present");
+			}
+
+			String ModeratorQual  = "insert into ModeratorQualification values(?,?,?)";
+			PreparedStatement stmt13 = connection.prepareStatement(ModeratorQual);
+			stmt13.setInt(1,id);
+			stmt13.setString(2,username);
+
+			stmt13.setDate(3, date);
+			int rs12 = stmt13.executeUpdate();
+
+			if(rs12>0){
+				System.out.println("Successfully Added Moderator Qualification ");
+			}
+
+
+		}
+
+		return result;
+	}
+
 	/*
 	 * Updates the User
 	 */
 	public static String updateUser(User user) throws SQLException {
-		
+
 		PreparedStatement ps ;
 		String result = "-1:Unknown Error";
-		
-		
+
+
 		String query = " Update User set  email2 = ? , firstname =  ? ,   LastName = ? ,  AboutMe = ? ,  PhotoURL1 = ? ,   "
 				+ "PhotoURL2 =  ? ,  PhotoURL3 =  ?,   StreetNumber =  ? ,  StreetName = ? ,  MajorMunicipality = ? , "
 				+ " GoverningDistrict = ? ,PostalArea = ?" 	+ " where username = ? ";
-		
-			try {
-				ps = connection.prepareStatement(query);
-				ps.setString(1, user.getEmails() ) ;
-				ps.setString(2, user.getFname());
-				ps.setString(3, user.getLname());
-				ps.setString(4, user.getAbout());
-				ps.setString(5, user.getUrl1());
-				ps.setString(6, user.getUrl2());
-				ps.setString(7, user.getUrl3());
-				ps.setString(8, user.getStreetNumber());
-				ps.setString(9, user.getStreetName());
-				ps.setString(10, user.getMajorMunicipality() ) ;
-				ps.setString(11, user.getGoverningDistrict() );
-				ps.setString(12, user.getPostalArea());
-				ps.setString(13, user.getUsername() ) ;
-				
-				int res = ps.executeUpdate();
-				
-				if ( res> 0 ){
-					System.out.println(" 1 row updated");
-					result = "0:Successfully updated!";
-				}
-				else{
-					System.out.println(" No row updated");
-					result = "-1: Error in Updating!";
-				}
-					
-						
+
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, user.getEmails() ) ;
+			ps.setString(2, user.getFname());
+			ps.setString(3, user.getLname());
+			ps.setString(4, user.getAbout());
+			ps.setString(5, user.getUrl1());
+			ps.setString(6, user.getUrl2());
+			ps.setString(7, user.getUrl3());
+			ps.setString(8, user.getStreetNumber());
+			ps.setString(9, user.getStreetName());
+			ps.setString(10, user.getMajorMunicipality() ) ;
+			ps.setString(11, user.getGoverningDistrict() );
+			ps.setString(12, user.getPostalArea());
+			ps.setString(13, user.getUsername() ) ;
+
+			int res = ps.executeUpdate();
+
+			if ( res> 0 ){
+				System.out.println(" 1 row updated");
+				result = "0:Successfully updated!";
 			}
-			catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			else{
+				System.out.println(" No row updated");
+				result = "-1: Error in Updating!";
 			}
 
-		
+
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
 		return "0:Successfully updated!";
-		
+
 	}
-	
+
 	/*
 	 * Gets User object from a username
 	 */
 	public static User getUser(String username2) throws SQLException {
-		
+
 		try {
 			System.out.println("loginAndGetType");
 			String query = "select * from User where username = ? ";
@@ -440,7 +578,7 @@ public class UserDBHandler {
 				}
 				String pass = rs.getString(2);
 				String email = rs.getString(3);
-				
+
 				String es = rs.getString(4);
 				String fname = rs.getString(5);
 				String lname = rs.getString(6);
@@ -516,6 +654,33 @@ public class UserDBHandler {
 			e.printStackTrace();
 		}
 		return null;
-		
+
 	}
+
+	/*
+	 * Returns all the qualifications of the moderator
+	 */
+	public static ArrayList<String> getQualifications(String username)
+
+	{
+		ArrayList<String> quals = new ArrayList<String>();
+		try{
+			
+			String query = "select Qualification.description from Qualification NATURAL JOIN ModeratorQualification  where ModeratorQualification.username = ? ";
+			connection = DatabaseHandler.createConnection();
+			PreparedStatement stmt = connection.prepareStatement(query);
+			stmt.setString(1, username);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next())
+			{
+				quals.add(rs.getString(1));
+			}
+			// System.out.println(rs.getString("username"));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return quals;
+	}
+
 }

@@ -102,6 +102,29 @@
 								} else {
 									overviewact = active;
 								}
+							
+								if (friends != null && friends.size() > 0) {
+									for (int i = 0; i < friends.size(); i++) {
+							%>
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<a href="profile?profilename=<%=friends.get(i).getUsername()%>" target="_blank"><%=friends.get(i).getFname() + " " + friends.get(i).getLname()%>										
+									</a> 
+									<a href="removeFriend?removename=<%=friends.get(i).getUsername()%>">
+										<button type="button"
+											class="btn pull-right btn-sm btn-danger extra-mar-sm fix-width">Remove</button>
+									</a>
+								</div>
+							</div>
+							<%
+								}
+								} else if (friends != null && friends.size() == 0) {
+							%>
+							<div class="panel panel-default">
+								<div class="panel-body">No Friends.</div>
+							</div>
+							<%
+								}
 							%>
 							<li <%=overviewact%>><a data-toggle="pill" href="#overview">
 									<i class="glyphicon glyphicon-home"></i> Overview
@@ -224,7 +247,7 @@
 						<div id="updatedetails"
 							class="tab-pane fade <%=updatedetailstabact%>">
 							<h3>Update Details</h3>
-							<form class="form-horizontal" method="get" action="updatedetails">
+							<form class="form-horizontal" method="post" action="updatedetails">
 								<div class="form-group">
 									<label class="control-label col-sm-3" for="emails">Sec.
 										Email:</label>
@@ -341,7 +364,7 @@
 							%>
 							<div class="panel panel-default">
 								<div class="panel-body">
-									<a href="profile?profilename=<%=friends.get(i).getUsername()%>"><%=friends.get(i).getFname() + " " + friends.get(i).getLname()%>										
+									<a href="profile?profilename=<%=friends.get(i).getUsername()%>" target="_blank"><%=friends.get(i).getFname() + " " + friends.get(i).getLname()%>										
 									</a> 
 									<a href="removeFriend?removename=<%=friends.get(i).getUsername()%>">
 										<button type="button"

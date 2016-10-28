@@ -20,8 +20,8 @@ import model.UserDBHandler;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+//@WebServlet("/quituser")
+public class StoreQualificationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final int NEW_USER = 101;
 	private static final int INIT_KARMA = 0;
@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public StoreQualificationServlet() {
         super();
         
         // TODO Auto-generated constructor stub
@@ -42,41 +42,39 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		String email = request.getParameter("email").toString();
-		String password = request.getParameter("password").toString();
-		try {
-			User u = UserDBHandler.loginAndGetType(email, password);
-			if(u==null)
-			{
-				request.setAttribute("message", "danger_Invalid Details!");
-				request.getRequestDispatcher("login.jsp").forward(request, response);
-			}
-			if(u.getType()==NEW_USER)
-			{
-				ArrayList<Datum> healthdata = HealthDataDBHanlder.getData(u.getUsername());
-				ArrayList<String> friendrequests = FriendshipDBHandler.getFriendRequests(u.getUsername());
-				HttpSession session =request.getSession();
-				session.setAttribute("user", u);
-				session.setAttribute("healthdata", healthdata);
-				session.setAttribute("friendrequests", friendrequests);
-				request.getRequestDispatcher("nuser.jsp").forward(request, response);
-			}
-			else if(u.getType()==NEW_MOD)
-			{
-				ArrayList<String> quals = UserDBHandler.getQualifications(u.getUsername());
-				
-				HttpSession session =request.getSession();
-				session.setAttribute("user",u);
-				session.setAttribute("quals",quals);
-				System.out.println("inside loginservlet:"+u);
-				request.getRequestDispatcher("moderator.jsp").forward(request, response);
-			}
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
+		User  user = (User) request.getSession().getAttribute("user");
+		HttpSession session =request.getSession();
+		if(user==null)
+		{
+			request.setAttribute("message", "danger_Invalid Details!");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 		
 		
+		String qualifications = request.getParameter("qualifications").toString();
+		String res="";
+		try {
+			res = UserDBHandler.addQualification(user.getUsername(), qualifications);
+			session.setAttribute("quals",UserDBHandler.getQualifications(user.getUsername()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String[] splitResult = res.split(":");
+		if(splitResult[0].equals("-1"))
+		{
+			request.setAttribute("message", "danger_"+splitResult[1]);
+			request.getRequestDispatcher("moderator.jsp").forward(request, response);
+		}
+		else if(splitResult[0].equals("0"))
+		{
+			request.setAttribute("message", "success_"+splitResult[1]);
+			request.getRequestDispatcher("moderator.jsp").forward(request, response);
+		}
+		
+		
+				
 	}
 
 	/**

@@ -26,6 +26,9 @@ public class HealthDataDBHanlder {
 		}
 	}
 
+	/*
+	 * Saves the datum object
+	 */
 	static public String saveDatum ( Datum data ) throws SQLException{
 
 		long seconds = System.currentTimeMillis();
@@ -58,6 +61,9 @@ public class HealthDataDBHanlder {
 
 	}
 
+	/*
+	 * Returns the datum arraylist of a user
+	 */
 	public static  ArrayList<Datum> getData (String username){
 
 		PreparedStatement ps ;

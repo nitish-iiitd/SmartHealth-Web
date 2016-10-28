@@ -6,7 +6,7 @@
 <head>
 <% 
 User profile = (User)request.getAttribute("profile");
-ArrayList<Datum> healthdata = (ArrayList<Datum>) session.getAttribute("profilehealthdata");
+ArrayList<Datum> healthdata = (ArrayList<Datum>) request.getAttribute("profilehealthdata");
 %>
 
 <title><%=profile.getUsername()%></title>
@@ -22,15 +22,26 @@ ArrayList<Datum> healthdata = (ArrayList<Datum>) session.getAttribute("profilehe
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+	**<jsp:include page="menu.jsp" />**
 	<div class="container">
     <div class="row profile">
 		<div class="col-md-3">
 			<div class="profile-sidebar">
 				<!-- SIDEBAR USERPIC -->
 				<div class="profile-userpic">
-					<img src="<%=profile.getUrl1() %>" class="img-responsive" alt="">
-				</div>
+						<%
+							if (profile.getUrl1().equals("")) {
+						%>
+						<img src="images/profile-default.png" class="img-responsive"
+							alt="">
+						<%
+							} else {
+						%>
+						<img src="<%=profile.getUrl1()%>" class="img-responsive" alt="">
+						<%
+							}
+						%>
+					</div>
 				<!-- END SIDEBAR USERPIC -->
 				<!-- SIDEBAR USER TITLE -->
 				<div class="profile-usertitle">
