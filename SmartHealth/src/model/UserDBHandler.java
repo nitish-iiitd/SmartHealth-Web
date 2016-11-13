@@ -5,10 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import com.mysql.jdbc.Statement;
 
 import java.sql.Connection;
+import java.sql.Date;
 
 import entities.Admin;
 import entities.Moderator;
@@ -665,7 +667,7 @@ public class UserDBHandler {
 	{
 		ArrayList<String> quals = new ArrayList<String>();
 		try{
-			
+
 			String query = "select Qualification.description from Qualification NATURAL JOIN ModeratorQualification  where ModeratorQualification.username = ? ";
 			connection = DatabaseHandler.createConnection();
 			PreparedStatement stmt = connection.prepareStatement(query);
@@ -682,5 +684,83 @@ public class UserDBHandler {
 		}
 		return quals;
 	}
+
+	public static String updateUserType ( String username , int userType) throws ClassNotFoundException, SQLException{
+
+		String message ="Nothing" ;
+		String query = "select * from EndUser where username = ?";
+		connection = DatabaseHandler.createConnection();
+
+		PreparedStatement stmt = connection.prepareStatement(query);
+		try {
+			stmt.setString(1, username);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		ResultSet rs = null;
+		try {
+			rs = stmt.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("RS " +rs);
+
+		// System.out.println(rs.getString("username"));
+		if ( rs.next() ){
+			Date joinDate = rs.getDate(3) ;
+			System.out.println("Join Date "+ joinDate);
+			java.util.Date todayDate =  Calendar.getInstance().getTime() ;
+			System.out.println("Today Date " + todayDate);
+			int diffInDays = (int) ((todayDate.getTime() - joinDate.getTime()) / (1000 * 60 * 60 * 24));
+
+			String query2 = "Update User set UserTypeID = ? where Username = ?" ;
+			PreparedStatement ps = connection.prepareStatement(query2);
+			ps.setString(2, username);
+
+			if (  userType == 101 && diffInDays >= 30  && diffInDays < 365 ){
+
+				ps.setInt(1, 102);
+
+				int res = ps.executeUpdate();
+
+				if ( res> 0 ){
+					System.out.println(" 1 row updated");
+					message = "0:Successfully updated User Experience!";
+				}
+				else{
+					System.out.println(" No row updated");
+					message = "-1: Error in Updating!";
+				}
+
+
+			}else
+				if( diffInDays >= 365 && userType!= 103){
+
+					ps.setInt(1, 103);
+
+					int res = ps.executeUpdate();
+
+					if ( res> 0 ){
+						System.out.println(" 1 row updated");
+						message = "0:Successfully updated User Experience!";
+					}
+					else{
+						System.out.println(" No row updated");
+						message = "-1: Error in Updating!";
+					}
+
+				}
+
+		}
+
+
+
+		return message;
+
+	}
+
 
 }

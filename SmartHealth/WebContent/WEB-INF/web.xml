@@ -117,4 +117,53 @@
     <url-pattern>/removeFriend</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>dispForum</servlet-name>
+    <servlet-class>controller.DisplayForum</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>dispForum</servlet-name>
+    <url-pattern>/forum</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>singForum</servlet-name>
+    <servlet-class>controller.SingleForumServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>singForum</servlet-name>
+    <url-pattern>/frm</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>storef</servlet-name>
+    <servlet-class>controller.StoreForum</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>storef</servlet-name>
+    <url-pattern>/storeforum</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>storeComm</servlet-name>
+    <servlet-class>controller.PostServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>storeComm</servlet-name>
+    <url-pattern>/storeComment</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>realComment</servlet-name>
+    <servlet-class>controller.CommentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>realComment</servlet-name>
+    <url-pattern>/savecomment</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>realComment2</servlet-name>
+    <servlet-class>controller.saveRating</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>realComment2</servlet-name>
+    <url-pattern>/saveRating</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

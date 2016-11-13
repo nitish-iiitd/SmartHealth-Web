@@ -135,7 +135,7 @@ public class FriendshipDBHandler {
 	}
 
 	/*
-	 * Accepts a friend request
+	 * Rejects a friend request
 	 */
 	public static String rejectFriendRequest(String requester,String requested) throws SQLException
 	{
@@ -360,7 +360,7 @@ public class FriendshipDBHandler {
 		preparedStmt1.setString(6, null);
 		System.out.println(preparedStmt1);
 		if(preparedStmt1.executeUpdate()>0){
-			System.out.println("Successfully canceled request");
+			System.out.println("Successfully cancelled request");
 		}
 		else
 			System.out.println("Can't cancel request");
@@ -534,8 +534,8 @@ public class FriendshipDBHandler {
 			int rs12 = stmt13.executeUpdate();
 
 			if(rs12>0){
-				System.out.println("Friend Request Send");
-				result=  "0:Friend Request Send";
+				System.out.println("Friend request sent.");
+				result=  "0:Friend request sent.";
 				return result;
 			}
 		}
@@ -575,7 +575,7 @@ public class FriendshipDBHandler {
 	 * Checks if the username is present
 	 */
 	public static boolean verifyUser(String username) throws SQLException{
-		String query1 = "select * from User where username = ? ";
+		String query1 = "select * from User where username = ? and status = 1";
 		boolean userExist = false;
 
 		try{

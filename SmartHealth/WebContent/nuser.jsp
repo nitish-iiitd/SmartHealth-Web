@@ -1,10 +1,11 @@
-<%@page import="entities.User,entities.Datum,java.util.*"%>
+<%@page import="entities.NUser,entities.User,entities.Datum,java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
 <%
+	//NUser user = (NUser) session.getAttribute("user");
 	User user = (User) session.getAttribute("user");
 	if (user == null) {
 		request.setAttribute("message", "danger_Please Login First !");
@@ -18,14 +19,19 @@
 <title><%=user.getUsername()%></title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="bootstrap.min.css">
+<script src="jquery-3.1.1.min.js"></script>
+<script src="bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/mycss.css">
+<link rel="stylesheet" href="css/loginform.css">
 <link rel="stylesheet" href="css/profile.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+<!--   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+<!--   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+
 </head>
 <body>
 	**<jsp:include page="menu.jsp" />**
@@ -79,6 +85,7 @@
 							%>
 						</div>
 						<div class="profile-usertitle-type">User</div>
+<%-- 						<div class="profile-usertitle-type">Karma : <%= user.getKarma() %></div> --%>
 					</div>
 					<!-- END SIDEBAR USER TITLE -->
 					<!-- SIDEBAR BUTTONS -->
@@ -103,29 +110,10 @@
 									overviewact = active;
 								}
 							
-								if (friends != null && friends.size() > 0) {
-									for (int i = 0; i < friends.size(); i++) {
+								//if (friends != null && friends.size() > 0) {
+								//	for (int i = 0; i < friends.size(); i++) {
 							%>
-							<div class="panel panel-default">
-								<div class="panel-body">
-									<a href="profile?profilename=<%=friends.get(i).getUsername()%>" target="_blank"><%=friends.get(i).getFname() + " " + friends.get(i).getLname()%>										
-									</a> 
-									<a href="removeFriend?removename=<%=friends.get(i).getUsername()%>">
-										<button type="button"
-											class="btn pull-right btn-sm btn-danger extra-mar-sm fix-width">Remove</button>
-									</a>
-								</div>
-							</div>
-							<%
-								}
-								} else if (friends != null && friends.size() == 0) {
-							%>
-							<div class="panel panel-default">
-								<div class="panel-body">No Friends.</div>
-							</div>
-							<%
-								}
-							%>
+							
 							<li <%=overviewact%>><a data-toggle="pill" href="#overview">
 									<i class="glyphicon glyphicon-home"></i> Overview
 							</a></li>
@@ -144,7 +132,7 @@
 								href="#friendrequests"> <i
 									class="glyphicon glyphicon-heart-empty"></i> Friends Requests
 							</a></li>
-							<li <%=forumact%>><a data-toggle="pill" href="#"> <i
+							<li <%=forumact%>><a  href="forum"> <i
 									class="glyphicon glyphicon-heart-empty"></i> Forums
 							</a></li>
 							<li><a data-toggle="pill" href="#sendrequest"> <i

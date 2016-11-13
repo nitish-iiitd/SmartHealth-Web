@@ -10,25 +10,23 @@
 		request.setAttribute("message", "danger_Please Login First !");
 		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
-	ArrayList<String> quals = (ArrayList<String>)session.getAttribute("quals");
+	ArrayList<String> quals = (ArrayList<String>) session.getAttribute("quals");
 %>
 
 <title><%=user.getUsername()%></title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="bootstrap.min.css">
 <link rel="stylesheet" href="css/mycss.css">
+<link rel="stylesheet" href="css/loginform.css">
 <link rel="stylesheet" href="css/profile.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="jquery-3.1.1.min.js"></script>
+<script src="bootstrap.min.js"></script>
 </head>
 <body>
 	**<jsp:include page="menu.jsp" />**
 	<div class="container">
-	<%
+		<%
 			// For displaying an alert at top of the page
 			if (request.getAttribute("message") != null) {
 				String completemessage = request.getAttribute("message").toString();
@@ -54,7 +52,18 @@
 				<div class="profile-sidebar">
 					<!-- SIDEBAR USERPIC -->
 					<div class="profile-userpic">
+						<%
+							if (user.getUrl1().equals("")) {
+						%>
+						<img src="images/profile-default.png" class="img-responsive"
+							alt="">
+						<%
+							} else {
+						%>
 						<img src="<%=user.getUrl1()%>" class="img-responsive" alt="">
+						<%
+							}
+						%>
 					</div>
 					<!-- END SIDEBAR USERPIC -->
 					<!-- SIDEBAR USER TITLE -->
@@ -128,15 +137,15 @@
 								<%=user.getStreetNumber()%></p>
 						</div>
 						<div id="addqual" class="tab-pane fade">
-						<h3>Qualifications</h3>
-						<%
+							<h3>Qualifications</h3>
+							<%
 								if (quals != null && quals.size() > 0) {
 									for (int i = 0; i < quals.size(); i++) {
 							%>
 							<div class="panel panel-default">
 								<div class="panel-body">
-									<p><%= quals.get(i).toUpperCase() %></p>
-								
+									<p><%=quals.get(i).toUpperCase()%></p>
+
 								</div>
 							</div>
 							<%
@@ -149,17 +158,17 @@
 							<%
 								}
 							%>
-							
-							
+
+
 							<h3>Add Qualification</h3>
-							
+
 							<form class="form-horizontal" method="get" action="storeQual">
 								<div class="form-group">
 									<label class="control-label col-sm-3">Qualification:</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="fname"
-											name="qualifications" placeholder="Enter comma separated qualifications"
-											value="">
+											name="qualifications"
+											placeholder="Enter comma separated qualifications" value="">
 									</div>
 								</div>
 								<div class="form-group">
@@ -177,7 +186,37 @@
 						</div>
 						<div id="createforum" class="tab-pane fade">
 							<h3>Create Forum</h3>
-							<p></p>
+							<form class="form-horizontal" method="get" action="storeforum">
+
+								<div class="form-group">
+									<label class="control-label col-sm-3">Topic:</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="topic"
+											name="topic" placeholder="Topic Heading">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-sm-3">Summary:</label>
+									<div class="col-sm-9">
+
+										<!-- <input type="text"width:250px;height:150px;"> -->
+										<!-- <input type="text" class = "form-control" cols="40" rows="5" > -->
+										<textarea name="summary" id="summary" class="form-control"
+											cols="40" rows="5"></textarea>
+									</div>
+								</div>
+
+
+								<div class="form-group">
+									<div class="col-sm-offset-3 col-sm-7">
+										<input type="submit"
+											class="btn btn-lg btn-primary extra-mar fix-width"
+											value="Submit Forum">
+										<!-- 								Register</input> -->
+									</div>
+								</div>
+							</form>
 						</div>
 
 					</div>
