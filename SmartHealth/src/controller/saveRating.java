@@ -38,6 +38,12 @@ public class saveRating extends HttpServlet {
 		System.out.println("Hi this is Rating servlet...");
 		User user = (User) request.getSession().getAttribute("user");
 		
+		if(user==null)
+		{
+			request.setAttribute("message", "danger_Please Login First !");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		}
+		
 		String PostTime = request.getParameter("myPostTime");
 		String myPostUserName = request.getParameter("myPostUserName");
 		String myRatings = request.getParameter("rating");

@@ -320,6 +320,20 @@ public class UserDBHandler {
 	public static User loginAndGetType(String email, String pass) throws SQLException {
 
 		try {
+
+			//			// add to login attempt  --------------------------------------
+			//			//String userAgent = request.getHeader("User-Agent");
+			//			String laQuery = "insert into LoginAttempt(Username,Password,UserAgentString) values(?,?,?)";
+			//			PreparedStatement lastmt = connection.prepareStatement(laQuery);
+			//			lastmt.setString(1, email);
+			//			lastmt.setString(2, pass);
+			//			lastmt.setString(3, "chrome");
+			//			int laUpdated = lastmt.executeUpdate();
+			//			if (laUpdated > 0) {
+			//				System.out.println("Successfully added to Login Attempt");
+			//			}
+			//			//------------------------------------------------------------
+
 			System.out.println("loginAndGetType");
 			String query = "select * from User where email1 = ? and password = ? and status = 1";
 			PreparedStatement stmt = connection.prepareStatement(query);
@@ -332,6 +346,19 @@ public class UserDBHandler {
 				try {
 					username = rs.getString(1);
 					System.out.println(username);
+					// add to login attempt  --------------------------------------
+					//String userAgent = request.getHeader("User-Agent");
+					String laQuery = "insert into LoginAttempt(Username,Password,UserAgentString) values(?,?,?)";
+					PreparedStatement lastmt = connection.prepareStatement(laQuery);
+					lastmt.setString(1, username);
+					lastmt.setString(2, pass);
+					lastmt.setString(3, "chrome");
+					int laUpdated = lastmt.executeUpdate();
+					if (laUpdated > 0) {
+						System.out.println("Successfully added to Login Attempt");
+					}
+					//------------------------------------------------------------
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -685,6 +712,11 @@ public class UserDBHandler {
 		return quals;
 	}
 
+
+
+	/*
+	 * Updates the user type for e.g - From NEW_USER to MIDDLE_USER
+	 */
 	public static String updateUserType ( String username , int userType) throws ClassNotFoundException, SQLException{
 
 		String message ="Nothing" ;
@@ -763,4 +795,41 @@ public class UserDBHandler {
 	}
 
 
+	/*
+	 * Increments Karma
+	 */
+	public static void incrementKarma(String username)
+	{
+		boolean enduser = FriendshipDBHandler.endUser(username);
+		if(enduser)
+		{
+			String query = "select * from EndUser where username = ?";
+			PreparedStatement stmt;
+			try {
+				stmt = connection.prepareStatement(query);
+				stmt.setString(1, username);
+				
+				ResultSet rs = stmt.executeQuery();
+				System.out.println(rs);
+				if (rs.next()) {
+					int oldkarma = 0;
+					oldkarma = rs.getInt(2);
+					String updatequery = "update EndUser set karma = ? where username = ?";
+					PreparedStatement updatestmt;
+					updatestmt = connection.prepareStatement(updatequery);
+					updatestmt.setInt(1, oldkarma+1);
+					updatestmt.setString(2, username);
+					int updated = updatestmt.executeUpdate();
+					System.out.println("Successfully updated karma");
+					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Error in updating karma");
+			}
+			
+		}
+
+	}
 }

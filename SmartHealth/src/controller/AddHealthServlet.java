@@ -71,6 +71,8 @@ public class AddHealthServlet extends HttpServlet {
 			datum = new Datum(1,user.getUsername(),3,propertyvalue,dateCreated);
 		}
 		try {
+			UserDBHandler.incrementKarma(user.getUsername());
+			
 			result = HealthDataDBHanlder.saveDatum(datum);
 			
 		} catch (SQLException e) {

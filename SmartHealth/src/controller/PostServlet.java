@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import entities.Post;
 import entities.User;
+import model.UserDBHandler;
 
 /**
  * Servlet implementation class CommentServlet
@@ -39,7 +40,10 @@ public class PostServlet extends HttpServlet {
 		HttpSession session =request.getSession();
 		u = (User) session.getAttribute("user");
 		if(u==null)
-			System.out.println("USer is NULL");
+		{
+			request.setAttribute("message", "danger_Please Login First !");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		}
 		String username = request.getParameter("fid");
 		String comment = request.getParameter("comment");
 		
@@ -57,8 +61,10 @@ public class PostServlet extends HttpServlet {
 		
 				
 		try {
+			
+			
 			if(p.storePost()){
-				
+				UserDBHandler.incrementKarma(u.getUsername());
 				text = "success";
 			}
 			else{

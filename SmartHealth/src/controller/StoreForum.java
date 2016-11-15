@@ -36,6 +36,12 @@ public class StoreForum extends HttpServlet {
 		String summary = request.getParameter("summary").toString();
 		
 		User user = (User) request.getSession().getAttribute("user");
+		if(user==null)
+		{
+			request.setAttribute("message", "danger_Please Login First !");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		}
+		
 		System.out.println(user.getUsername());
 		Forum f = new Forum(topic,summary,user.getUsername());
 		if(f!=null)

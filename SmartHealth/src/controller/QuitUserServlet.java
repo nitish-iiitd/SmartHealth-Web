@@ -44,6 +44,12 @@ public class QuitUserServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		User  usr = (User) request.getSession().getAttribute("user");
 		
+		if(usr==null)
+		{
+			request.setAttribute("message", "danger_Please Login First !");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		}
+		
 		String res = UserDBHandler.quitUser(usr.getUsername());
 				
 		request.getSession().setAttribute("user", null);

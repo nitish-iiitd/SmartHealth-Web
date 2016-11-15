@@ -59,24 +59,24 @@ public class LoginServlet extends HttpServlet {
 			}
 			if(u.getType()==NEW_USER || u.getType()==MID_USER || u.getType()==OLD_USER)
 			{
-				NUser nu = (NUser) UserDBHandler.loginAndGetType(email, password);
-				UserDBHandler.updateUserType(nu.getUsername(), nu.getType());
+				//NUser nu = (NUser) UserDBHandler.loginAndGetType(email, password);
+				UserDBHandler.updateUserType(u.getUsername(), u.getType());
 				ArrayList<Datum> healthdata = HealthDataDBHanlder.getData(u.getUsername());
 				ArrayList<String> friendrequests = FriendshipDBHandler.getFriendRequests(u.getUsername());
 				HttpSession session =request.getSession();
-				session.setAttribute("user", nu);
+				session.setAttribute("user", u);
 				session.setAttribute("healthdata", healthdata);
 				session.setAttribute("friendrequests", friendrequests);
 				request.getRequestDispatcher("nuser.jsp").forward(request, response);
 			}
 			else if(u.getType()==NEW_MOD)
 			{
-				Moderator mod = (Moderator) UserDBHandler.loginAndGetType(email, password);
+				//Moderator mod = (Moderator) UserDBHandler.loginAndGetType(email, password);
 				ArrayList<String> quals = UserDBHandler.getQualifications(u.getUsername());				
 				HttpSession session =request.getSession();
-				session.setAttribute("user",mod);
+				session.setAttribute("user",u);
 				session.setAttribute("quals",quals);
-				System.out.println("inside loginservlet:"+mod);
+				System.out.println("inside loginservlet:"+u);
 				request.getRequestDispatcher("moderator.jsp").forward(request, response);
 			}
 		} catch (SQLException | ClassNotFoundException e) {

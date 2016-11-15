@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import entities.Comment;
 import entities.User;
+import model.UserDBHandler;
 
 /**
  * Servlet implementation class CommentServlet
@@ -39,6 +40,11 @@ public class CommentServlet extends HttpServlet {
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		System.out.println("Hi this is Comment servlet...");
 		User user = (User) request.getSession().getAttribute("user");
+		if(user==null)
+		{
+			request.setAttribute("message", "danger_Please Login First !");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		}
 
 		
 		String fid = request.getParameter("fid");
@@ -52,6 +58,8 @@ public class CommentServlet extends HttpServlet {
 		System.out.println(fid+Comment+PostTime);
 		Comment com = new  Comment(myPostUserName,Timestamp.valueOf(PostTime), user.getUsername(), Timestamp.valueOf(PostTime),Comment, photoLocation,linkLocation, videoLocation);
 		try {
+			
+			UserDBHandler.incrementKarma(user.getUsername());
 			com.storeComment();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

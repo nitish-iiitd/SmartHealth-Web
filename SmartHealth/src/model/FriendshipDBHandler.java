@@ -552,7 +552,7 @@ public class FriendshipDBHandler {
 	 * @param requested
 	 * @return
 	 */
-	private static boolean endUser(String requested) {
+	public static boolean endUser(String requested) {
 
 		String query1 = "select * from EndUser where username = ? ";
 		boolean userExist =false;
